@@ -1,7 +1,7 @@
 ---
 title: "AOC2"
 format: html
-editor: visual
+editor: source
 ---
 
 ## Packages
