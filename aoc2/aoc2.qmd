@@ -1,0 +1,59 @@
+---
+title: "AOC2"
+format: html
+editor: visual
+---
+
+## Packages
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+setwd("~/aoc_2023/aoc2")
+aoc2 = read_delim("aoc2.txt", delim = ":" , col_names = c("game", "values"))
+```
+
+## Prepare data
+
+```{r}
+aoc2 = aoc2 %>% 
+  mutate(
+    game = parse_number(game)
+    )
+```
+
+## Part 1
+
+```{r}
+aoc2 = aoc2 %>%
+  mutate(
+    red = str_extract_all(values, "[:digit:]+(?= red)"),
+    green = str_extract_all(values, "[:digit:]+(?= green)"),
+    blue = str_extract_all(values, "[:digit:]+(?= blue)")
+  ) %>% 
+  rowwise() %>% 
+  mutate(red = unlist(red) %>% as.numeric() %>% max(),
+         green = unlist(green) %>% as.numeric() %>% max(),
+         blue = unlist(blue) %>% as.numeric() %>% max()) %>% 
+  mutate(red_inq = ifelse(red <= 12, TRUE, FALSE),
+         green_inq = ifelse(green <= 13, TRUE, FALSE),
+         blue_inq = ifelse(blue <= 14, TRUE, FALSE)) 
+  
+  
+aoc2 %>% 
+  filter(all(red_inq, green_inq, blue_inq)) %>% 
+  ungroup() %>% 
+  summarise(total = sum(game))
+```
+
+## Part 2
+
+```{r}
+aoc2 %>%
+  ungroup() %>% 
+  mutate(
+    power = across(c(red, green, blue)) %>% apply(1, prod)) %>% 
+  summarise(total = sum(power))
+```
