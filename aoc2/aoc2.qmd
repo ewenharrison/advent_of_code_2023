@@ -45,7 +45,7 @@ aoc2 = aoc2 %>%
 aoc2 %>% 
   filter(all(red_inq, green_inq, blue_inq)) %>% 
   ungroup() %>% 
-  summarise(total = sum(game))
+  summarise(sum(game))
 ```
 
 ## Part 2
@@ -55,5 +55,5 @@ aoc2 %>%
   ungroup() %>% 
   mutate(
     power = across(c(red, green, blue)) %>% apply(1, prod)) %>% 
-  summarise(total = sum(power))
+  summarise(sum(power))
 ```
