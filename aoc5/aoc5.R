@@ -92,8 +92,8 @@ fn_seeds_reverse_wrapper <- function(.locations, .ranges){ # .locations to test,
 ### e.g.
 fn_seeds_reverse_wrapper(.locations = tibble(value = c(0,1)), seed_ranges)
 
-### Grid search, relies on hitting at given resolution
-grid_search <- function(start, end, resolution, .ranges){
+### Grid search, relies on hitting a valid location at a given resolution
+grid_search <- function(start, end, resolution, .ranges){  # location to test start and end
   locations = tibble(value = seq(start, end, by = resolution))
   fn_seeds_reverse_wrapper(locations, .ranges) %>% 
     bind_cols(locations %>% select(location = value), .) %>% 
