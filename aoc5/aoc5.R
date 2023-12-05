@@ -29,8 +29,8 @@ hum_loc = fn_prep(maps, 161, 184)
 
 ## Part 1 ----
 ### Function to provide location values from seeds
-fn_seeds <- function(.seeds, .lookup){
-  .seeds %>% 
+fn_seeds <- function(.value_tbl, .lookup){
+  .value_tbl %>% 
     left_join(.lookup, join_by(between(value, source_start, source_end))) %>% 
     mutate(dest = value - source_start + dest_start,
            dest = ifelse(is.na(dest), value, dest)) %>% 
@@ -71,8 +71,8 @@ seed_ranges = seeds %>%
   mutate(end = start + range - 1) 
 
 ### Function to provide seed values from possible locations
-fn_seeds_reverse <- function(.locations, .lookup){
-  .locations %>% 
+fn_seeds_reverse <- function(.value_tbl, .lookup){
+  .value_tbl %>% 
     left_join(.lookup, join_by(between(value, dest_start, dest_end))) %>% 
     mutate(source = value - dest_start + source_start,
            source = ifelse(is.na(source), value, source)) %>% 
